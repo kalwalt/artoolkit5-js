@@ -48,14 +48,14 @@ export default class Utils {
       let url3 = url + '.fset3'
       console.log(url1);
       try {
-      const response = await axios.get(url1, { responseType: 'arraybuffer' })
-        .then(_ => {
+       return await axios.get(url1, { responseType: 'arraybuffer' })
+        .then((response) => {
           return axios.get(url2, { responseType: 'arraybuffer' })
         })
-        .then(_ => {
+        .then((response) => {
           return axios.get(url3, { responseType: 'arraybuffer' })
         })
-        return new Uint8Array(response.data)
+        .then((response) => { return new Uint8Array(response.data) })
         }
         catch(error) {
           throw error;
