@@ -132,20 +132,15 @@ export default class ARToolkit {
 
     let data
 
-    if (urlOrData.indexOf('\n') !== -1) {
-      // assume text from a .patt file
-      data = Utils.string2Uint8Data(urlOrData);
-    } else {
     // fetch data via HTTP
       try {
         data = await Utils.fetchRemoteNFTData(urlOrData);
       } catch (error) { throw error }
-    }
 
     this._storeDataFile(data, target)
 
     // return the internal marker ID
-    return this.instance._addNFTMarker(arId, target)
+    return this.instance._addNFTMarker(target, arId)
   }
 
   //----------------------------------------------------------------------------
