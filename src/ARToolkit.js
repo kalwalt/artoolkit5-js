@@ -135,7 +135,7 @@ export default class ARToolkit {
 
     // fetch data via HTTP
       try {
-        data = await Utils.fetchRemoteNFTData2(urlOrData);
+        data = await Utils.fetchRemoteNFTData(urlOrData);
       } catch (error) { throw error }
 
     this._storeDataFile(data, target)
