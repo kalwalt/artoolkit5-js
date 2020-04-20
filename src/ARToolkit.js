@@ -20,6 +20,7 @@ export default class ARToolkit {
     this.instance;
 
     this.markerCount = 0;
+    this.markerNFTCount = 0;
     this.multiMarkerCount = 0;
     this.cameraCount = 0;
   }
