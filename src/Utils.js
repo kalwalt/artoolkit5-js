@@ -12,6 +12,16 @@ export default class Utils {
     }
   }
 
+  static async fetchRemoteNFTData (url) {
+    const response = await axios.all([
+      axios.get(url + '.fset', { responseType: 'arraybuffer' }),
+      axios.get(url + '.iset', { responseType: 'arraybuffer' }),
+      axios.get(url + '.fset3', { responseType: 'arraybuffer' })
+    ])
+      .then((res) => { return new Uint8Array(res.data) })
+      .catch((error) => { console.error(error) })
+  }
+
   static string2Uint8Data(string) {
     let data = new Uint8Array(string.length);
     for(let i = 0; i < data.length; i++) {

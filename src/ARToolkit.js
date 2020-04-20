@@ -7,7 +7,7 @@ const BARCODE_MARKER = 1;
 const NFT_MARKER = 2;
 
 export default class ARToolkit {
-  
+
   static get UNKNOWN_MARKER() { return UNKNOWN_MARKER; }
   static get PATTERN_MARKER() { return PATTERN_MARKER; }
   static get BARCODE_MARKER() { return BARCODE_MARKER; }
@@ -103,7 +103,7 @@ export default class ARToolkit {
   }
 
   async addMarker(arId, urlOrData) {
-    
+
     const target = '/marker_' + this.markerCount++;
 
     let data;
@@ -127,9 +127,27 @@ export default class ARToolkit {
 
   }
 
-  addNFTMarker() {
+  async addNFTMarker (arId, urlOrData) {
+    const target = '/markerNFT_' + this.markerNFTCount++
 
+    let data
+
+    if (urlOrData.indexOf('\n') !== -1) {
+      // assume text from a .patt file
+      data = Utils.string2Uint8Data(urlOrData);
+    } else {
+    // fetch data via HTTP
+      try {
+        data = await Utils.fetchRemoteNFTData(urlOrData);
+      } catch (error) { throw error }
+    }
+
+    this._storeDataFile(data, target)
+
+    // return the internal marker ID
+    return this.instance._addNFTMarker(arId, target)
   }
+
   //----------------------------------------------------------------------------
 
   // implementation
