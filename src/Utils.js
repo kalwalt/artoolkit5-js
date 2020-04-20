@@ -18,8 +18,18 @@ export default class Utils {
       axios.get(url + '.iset', { responseType: 'arraybuffer' }),
       axios.get(url + '.fset3', { responseType: 'arraybuffer' })
     ])
+      .then(axios.spread((res1, res2, res3) => {return new Uint8Array(res1.data)}))
+      .catch((error) => { console.error(error) })
+  }
+
+  static async fetchRemoteNFTData2 (url) {
+    let url1 = url + '.fset'
+    const response = await axios.get(url1, { responseType: 'arraybuffer' })
+    .then(axios.get(url + '.iset', { responseType: 'arraybuffer' }))
+    .then(axios.get(url + '.fset3', { responseType: 'arraybuffer' }))
       .then((res) => { return new Uint8Array(res.data) })
       .catch((error) => { console.error(error) })
+    return new Uint8Array(response.data)
   }
 
   static string2Uint8Data(string) {
